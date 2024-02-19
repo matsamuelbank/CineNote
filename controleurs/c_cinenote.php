@@ -1,39 +1,60 @@
 <?php
+require_once('../models/class.pdogsb.php');
 
-    require_once('../models/class.pdogsb.php');
-    $pdo = PdoGsb::getPdoGsb();
-    
-    $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'connexion';
+class FilmAction
+{
+    private $pdo;
 
-    if($action =='accueil')
+    public function __construct()
+    {
+        $this->pdo = PdoGsb::getPdoGsb();
+    }
+
+    public function filterData($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    public function accueil()
     {
         include('../vues/accueil.php');
     }
 
-    if($action == 'details')
+    public function details($idFilm)
     {
-        $idFilm = 0;
-
-        if(isset($_GET["idFilm"]))
-        {
-            $idFilm = $_GET["idFilm"];
-            include('../vues/header.php');
-
-            $lesCommentaires = $pdo->getCommentaires($idFilm);
-            include('../vues/details.php');
-            exit;
-        }
+        include('../vues/header.php');
+        $lesCommentaires = $this->pdo->getCommentaires($idFilm);
+        include('../vues/details.php');
     }
 
-    if($action == 'ajoutCommentaire') {
-        if(isset($_POST['valueCommentaire'], $_POST['idUser'], $_POST['idFilm'])) {
-            $valueCommentaire = $_POST['valueCommentaire'];
-            $coIdUtilisateur = $_POST['idUser'];
-            $coIdFilm = $_POST['idFilm'];
-            $coDateDePublication = date('Y-m-d H:i:s');
-            
-            $pdo->addCommentaire($valueCommentaire, $coDateDePublication, $coIdFilm,$coIdUtilisateur);
-        } 
+    public function ajoutCommentaire($valueCommentaire, $coIdUtilisateur, $coIdFilm)
+    {
+        $coDateDePublication = date('Y-m-d H:i:s');
+        $this->pdo->addCommentaire($valueCommentaire, $coDateDePublication, $coIdFilm, $coIdUtilisateur);
     }
-    
-    
+}
+
+$action = new FilmAction();
+
+if ($_REQUEST['action'] == 'accueil') {
+    $action->accueil();
+}
+
+if ($_REQUEST['action'] == 'details') {
+    if (isset($_GET["idFilm"])) {
+        $idFilm = $_GET["idFilm"];
+        $action->details($idFilm);
+    }
+}
+
+if ($_REQUEST['action'] == 'ajoutCommentaire') {
+    if (isset($_POST['valueCommentaire'], $_POST['idUser'], $_POST['idFilm'])) {
+        $valueCommentaire = $action->filterData($_POST['valueCommentaire']);
+        $coIdUtilisateur = $action->filterData($_POST['idUser']);
+        $coIdFilm = $action->filterData($_POST['idFilm']);
+        $action->ajoutCommentaire($valueCommentaire, $coIdUtilisateur, $coIdFilm);
+    }
+}

@@ -1,24 +1,22 @@
 <?php
 require_once('../models/class.pdogsb.php');
-$pdo = PdoGsb::getPdoGsb();
 
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'connexion';
+class UserAction {
+    private $pdo;
 
-function filterData($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
+    public function __construct() {
+        $this->pdo = PdoGsb::getPdoGsb();
+    }
 
+    public function filterData($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
-if ($action == 'connexion') {
-    if (isset($_POST['uLogin']) && isset($_POST['uMdp'])) {
-        $uLogin = filterData($_POST['uLogin']);
-        $uMdp = filterData($_POST['uMdp']);
-
-        $infosUser = $pdo->rechercherUtilisateur($uLogin);
+    public function connexion($uLogin, $uMdp) {
+        $infosUser = $this->pdo->rechercherUtilisateur($uLogin);
         if ($infosUser !== false) {
             $hashed_password = $infosUser['uMdp'];
 
@@ -37,25 +35,11 @@ if ($action == 'connexion') {
             header('Location: ../index.php');
         }
     }
-}
 
-if ($action == 'inscription') {
-
-    if (
-        isset($_POST['uNom']) && isset($_POST['uPrenom']) && isset($_POST['uPseudo']) && isset($_POST['uLogin'])
-        && isset($_POST['uMdp']) && isset($_POST['uCodePostal']) && isset($_POST['uAdresse'])
-    ) {
-
-        $uNom = filterData($_POST['uNom']);
-        $uPrenom = filterData($_POST['uPrenom']);
-        $uPseudo = filterData($_POST['uPseudo']);
-        $uLogin = filterData($_POST['uLogin']);
-        $uMdp = filterData($_POST['uMdp']);
+    public function inscription($uNom, $uPrenom, $uPseudo, $uLogin, $uMdp, $uCodePostal, $uAdresse) {
         $uMdp = password_hash($uMdp, PASSWORD_DEFAULT);
-        $uCodePostal = filterData($_POST['uCodePostal']);
-        $uAdresse = filterData($_POST['uAdresse']);
 
-        $data =  $pdo->addUser($uNom, $uPrenom, $uPseudo, $uLogin, $uMdp, $uCodePostal, $uAdresse);
+        $data =  $this->pdo->addUser($uNom, $uPrenom, $uPseudo, $uLogin, $uMdp, $uCodePostal, $uAdresse);
         if ($data) {
             header('Location: ../index.php');
         } else {
@@ -63,5 +47,31 @@ if ($action == 'inscription') {
             header('Location: ../vues/inscription.php');
         }
     }
-    exit;
+}
+
+$action = new UserAction();
+
+if ($_REQUEST['action'] == 'connexion') {
+    if (isset($_POST['uLogin']) && isset($_POST['uMdp'])) {
+        $uLogin = $action->filterData($_POST['uLogin']);
+        $uMdp = $action->filterData($_POST['uMdp']);
+        $action->connexion($uLogin, $uMdp);
+    }
+}
+
+if ($_REQUEST['action'] == 'inscription') {
+    if (
+        isset($_POST['uNom']) && isset($_POST['uPrenom']) && isset($_POST['uPseudo']) && isset($_POST['uLogin'])
+        && isset($_POST['uMdp']) && isset($_POST['uCodePostal']) && isset($_POST['uAdresse'])
+    ) {
+        $uNom = $action->filterData($_POST['uNom']);
+        $uPrenom = $action->filterData($_POST['uPrenom']);
+        $uPseudo = $action->filterData($_POST['uPseudo']);
+        $uLogin = $action->filterData($_POST['uLogin']);
+        $uMdp = $action->filterData($_POST['uMdp']);
+        $uCodePostal = $action->filterData($_POST['uCodePostal']);
+        $uAdresse = $action->filterData($_POST['uAdresse']);
+
+        $action->inscription($uNom, $uPrenom, $uPseudo, $uLogin, $uMdp, $uCodePostal, $uAdresse);
+    }
 }
