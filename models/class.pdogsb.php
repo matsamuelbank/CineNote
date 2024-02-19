@@ -67,4 +67,37 @@ class PdoGsb
             return true;
         }
     }
+
+    public function getCommentaires($idFilm)
+    {
+        $req = "SELECT * FROM commentaire INNER JOIN utilisateur ON utilisateur.uId = commentaire.coIdUtilisateur WHERE coIdFilm = :idFilm";
+        $stmt = PdoGsb::$monPdo->prepare($req);
+        $stmt->bindParam(':idFilm', $idFilm);
+    
+        if (!$stmt->execute()) {
+            afficherErreurSQL("Problème lors de la récupération des commentaires.", $req, PdoGsb::$monPdo->errorInfo());
+        }
+    
+        $lesCommentaires = $stmt->fetchAll();
+        return $lesCommentaires;
+    }
+    
+
+    public function addCommentaire($valueCommentaire, $coDateDePublication, $coIdFilm,$coIdUtilisateur)
+    {
+        $req = 'INSERT INTO commentaire (coText, coDateDePublication,coIdFilm,coIdUtilisateur) 
+        VALUE(:coText, :coDateDePublication,:coIdFilm,:coIdUtilisateur)';
+
+        $stmt = PdoGsb::$monPdo->prepare($req);
+        $stmt->bindParam(':coText', $valueCommentaire);
+        $stmt->bindParam(':coDateDePublication', $coDateDePublication);
+        $stmt->bindParam(':coIdFilm', $coIdFilm);
+        $stmt->bindParam(':coIdUtilisateur', $coIdUtilisateur);
+
+        if (!$stmt->execute()) {
+            afficherErreurSQL("Problème lors de l'insertion du commentaire.", $req, PdoGsb::$monPdo->errorInfo());
+        } else {
+            return true;
+        }
+    }
 }

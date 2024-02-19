@@ -6,15 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/accueil.css">
-
-
-<body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-</body>
 
-</html>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
@@ -62,7 +56,7 @@
                                     <h5 class="card-title">${movie.title}</h5>
                                     <p class="card-text">${movie.overview}</p>
                                     <p>Date de sortie: ${movie.release_date}</p>
-                                    <a href="c_cinenote?action=details&idFilm=${movie.id}" class="btn btn-primary">plus d'information</a>
+                                    <a href="../controleurs/c_cinenote.php?action=details&idFilm=${movie.id}" class="btn btn-primary">plus d'information</a>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +118,7 @@
                                                         <h5 class="card-title">${movie.title}</h5>
                                                         <p class="card-text">${movie.overview}</p>
                                                         <p>Date de sortie: ${movie.release_date}</p>
-                                                        <a href="c_cinenote?action=details&idFilm=${movie.id}" class="btn btn-primary">plus d'information</a>
+                                                        <a href="../controleurs/c_cinenote.php?action=details&idFilm=${movie.id}" class="btn btn-primary">plus d'information</a>
                                                     </div>
                                                 </div>
                                             </div>
