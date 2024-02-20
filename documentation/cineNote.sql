@@ -24,6 +24,7 @@ CREATE TABLE notation (
     nIdFilm INT,
     nIdUtilisateur INT,
     note FLOAT,
+    moyenneNote FLOAT,
     dateNotation DATE,
     FOREIGN KEY (nIdUtilisateur) REFERENCES utilisateur(uId)
 ) ENGINE=InnoDB;

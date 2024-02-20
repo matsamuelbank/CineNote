@@ -13,7 +13,7 @@
 
 <body>
 
-   <?php include('header.php');?>
+    <?php include('header.php'); ?>
 
     <div class="container " id="genre">
 
@@ -53,10 +53,10 @@
                             <div class="card" style="width: 100%;">
                                 <img src="${imageUrl}" class="card-img-top" alt="${movie.title} poster">
                                 <div class="card-body">
-                                    <h5 class="card-title">${movie.title}</h5>
-                                    <p class="card-text">${movie.overview}</p>
+                                    <h5 class="card-title">Nom du film: ${movie.title}</h5>
+                                    <p class="card-text">Synthèse: ${movie.overview}</p>
                                     <p>Date de sortie: ${movie.release_date}</p>
-                                    <a href="../controleurs/c_cinenote.php?action=details&idFilm=${movie.id}" class="btn btn-primary">plus d'information</a>
+                                <a href="../controleurs/c_cinenote.php?action=details&idFilm=${movie.id}" class="btn btn-primary">plus d'information</a>
                                 </div>
                             </div>
                         </div>
@@ -115,8 +115,8 @@
                                                 <div class="card" style="width: 100%;">
                                                     <img src="${imageUrl}" class="card-img-top" alt="${movie.title} poster">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">${movie.title}</h5>
-                                                        <p class="card-text">${movie.overview}</p>
+                                                        <h5 class="card-title">Nom du film: ${movie.title}</h5>
+                                                        <p class="card-text">Synthèse: ${movie.overview}</p>
                                                         <p>Date de sortie: ${movie.release_date}</p>
                                                         <a href="../controleurs/c_cinenote.php?action=details&idFilm=${movie.id}" class="btn btn-primary">plus d'information</a>
                                                     </div>
@@ -128,7 +128,7 @@
                                         });
                                         console.log("nombre de film trouvé " + nb)
 
-                                        if (data.page < data.total_pages && page < 3) { 
+                                        if (data.page < data.total_pages && page < 3) {
                                             fetchMovies(page + 1);
                                         }
                                     },
