@@ -15,8 +15,8 @@
     <script src="javaScript/jquery.min.js"></script>
     <script src="javaScript/bootstrap.min.js"></script>
     <script src="javaScript/main.js"></script>
-
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="icon" href="../images/cineNote_logo.jpeg">
 
 </head>
 
@@ -69,11 +69,11 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary rounded submit p-3 px-5">Inscription</button>
                                 <p style="color: red">
-                                    <?php 
-                                        if(isset($_SESSION['error'])) {
-                                            echo $_SESSION['error'];
-                                            unset($_SESSION['error']);
-                                        }
+                                    <?php
+                                    if (isset($_SESSION['error'])) {
+                                        echo $_SESSION['error'];
+                                        unset($_SESSION['error']);
+                                    }
                                     ?>
                                 </p>
                             </div>

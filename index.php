@@ -15,9 +15,8 @@
     <script src="javaScript/jquery.min.js"></script>
     <script src="javaScript/bootstrap.min.js"></script>
     <script src="javaScript/main.js"></script>
-
     <link rel="stylesheet" href="css/index.css">
-
+    <link rel="icon" href="images/cineNote_logo.jpeg">
 </head>
 
 <body>
